@@ -1,0 +1,11 @@
+# Ignore InteliJ IDEA project settings
+.idea/
+
+#Ignore Visual Studio Code settings
+.vscode/
+
+#Ignore all log files in the logs directory
+logs/*.log
+
+#Ignore all build artifact in the target directory
+target/
