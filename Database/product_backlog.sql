@@ -5,24 +5,23 @@ BEGIN TRANSACTION;
 -- 1. Create the product_backlog table
 CREATE TABLE IF NOT EXISTS product_backlog (
     backlog_item_id SERIAL PRIMARY KEY,                             -- Unique ID for each backlog item
-    product_id INTEGER NOT NULL,                                         -- References the product associated with the backlog item
-    item_description TEXT NOT NULL,                                  -- Description of the backlog item
-    priority INTEGER NOT NULL,                                           -- Priority of the backlog item
-    status  status VARCHAR(30) CHECK (status IN ('To Do', 'In Progress', 'Blocked', 'In Review', 'Done', 'Archived')) DEFAULT 'To Do',
+    product_id INTEGER NOT NULL,                                    -- References the product associated with the backlog item
+    item_description TEXT NOT NULL,                                 -- Description of the backlog item
+    priority INTEGER NOT NULL,                                      -- Priority of the backlog item
+    status  status VARCHAR(30) CHECK (status IN ('TO_DO', 'IN_PROGRESS', 'BLOCKED', 'IN_REVIEW', 'DONE')) DEFAULT 'TO_DO',
     -- Status values:
         -- 'To Do'        : Item is yet to be started.
         -- 'In Progress'  : Item is currently being worked on.
         -- 'Blocked'      : Item is blocked due to some external dependency.
         -- 'In Review'    : Item is complete and under review for quality/approval.
         -- 'Done'         : Item is completed.
-        -- 'Archived'     : Item is no longer active, archived for historical purposes.
-    due_date DATE,                                                   -- Expected completion date for the backlog item
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                  -- Timestamp of when the backlog item was created
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                  -- Timestamp when the backlog item was last updated
+    due_date DATE,                                                  -- Expected completion date for the backlog item
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                 -- Timestamp of when the backlog item was created
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                 -- Timestamp when the backlog item was last updated
 
     -- Ensure the backlog is deleted if product is deleted
     CONSTRAINT fk_product_id FOREIGN KEY (product_id)
-        REFERENCES products(product_id)                              -- Reference to the 'products' table
+        REFERENCES products(product_id)                             -- Reference to the 'products' table
         ON DELETE CASCADE
 );
 
@@ -34,11 +33,12 @@ CREATE INDEX idx_product_backlog_due_date ON product_backlog (priority);
 
 -- 3. Create the products_backlog_olap table to log changes in the products table
 CREATE TABLE IF NOT EXISTS products_backlog_olap (
-    log_id SERIAL PRIMARY KEY,                              -- Unique identifier for each log entry.
-    backlog_item_id INTEGER,                                -- The ID of the backlog item that changed.
-    operation_type VARCHAR(10) NOT NULL,                    -- The type of operation: 'INSERT', 'UPDATE', or 'DELETE'.
-    data JSONB NOT NULL,                                    -- Stores the full product data in JSONB format.
-    operation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP      -- Timestamp of when the operation occurred.
+    log_id SERIAL PRIMARY KEY,                                      -- Unique identifier for each log entry.
+    product_id INTEGER,                                             -- The ID of the associated product
+    backlog_item_id INTEGER,                                        -- The ID of the backlog item that changed.
+    operation_type VARCHAR(10) NOT NULL,                            -- The type of operation: 'INSERT', 'UPDATE', or 'DELETE'.
+    data JSONB NOT NULL,                                            -- Stores the full product data in JSONB format.
+    operation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP              -- Timestamp of when the operation occurred.
 );
 
 -- 4. Define function to log changes in the product_backlog table
@@ -54,9 +54,7 @@ BEGIN
     -- Log update operations
     ELSIF (TG_OP = 'UPDATE') THEN
         -- Update timestamp
-        UPDATE product_backlog
-        Set updated_at = CURRENT_TIMESTAMP
-        WHERE backlog_item_id = NEW.backlog_item
+        NEW.updated_at = CURRENT_TIMESTAMP;
         -- Log update
         INSERT INTO products_backlog_olap (backlog_item_id, operation_type, data)
         VALUES (NEW.backlog_item_id, 'UPDATE', row_to_json(NEW));
@@ -75,7 +73,7 @@ BEGIN
         RETURN OLD;
     END IF;
 END;
-$$ LANGUAGE plpgsql; -- Defines the function in PL/pgSQL language
+$$ LANGUAGE plpgsql;                                                  -- Defines the function in PL/pgSQL language
 
 -- 5. Create a trigger to call the log_product_backlog_changes function on any insert, update. or delete
 CREATE TRIGGER trg_product_backlog_changes
