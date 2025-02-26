@@ -1,0 +1,458 @@
+    Project:
+        project_id
+        project_name
+        project_description
+        start_date
+        end_date
+        project_status_id
+        owner_id
+        budget
+        priority
+    project_status:
+        status_id
+        status_name
+        status_description
+    sprint:
+        sprint_id
+        project_id
+        start_date
+        end_date
+        goal
+        sprint_status_id
+        created_at
+    milestone:
+        milestone_id
+        project_id
+        milestone_name
+        milestone_description
+        milestone_status_id
+        due_date
+        completion_percentage
+        created_at
+    milestone_status:
+        status_id
+        status_name
+        status_description
+    task:
+        task_id
+        sprint_id
+        milestone_id
+        assigned_to
+        task_name
+        task_description
+        task_status_id
+        due_date
+        priority
+        created_at
+    priority:
+        priority_id
+        priority_name
+        priority_description
+    task_status:
+        status_id
+        status_name
+        status_description
+    project_roadmap:
+        roadmap_id
+        project_id
+        roadmap_name
+        roadmap_description
+        start_date
+        end_date
+        created_at
+    feature/release:
+        feature_id
+        project_id
+        feature_name
+        feature_description
+        feature_status_id
+        release_date
+        created_at
+    notification:
+        notification_id
+        recipient_id
+        notification_message
+        notification_type
+        notification_status_id
+        created_at
+        updated_at
+    notification_type:
+        type_id
+        type_name
+        type_description
+    project_update:
+        update_id
+        project_id
+        update_message
+        update_type
+        created_at
+        updated_at
+    update_type:
+        type_id
+        type_name
+        type_description
+    sprint history:
+        history_id
+        sprint_id
+        completed_percentage
+        start_date
+        end_date
+        actual_completion_date
+        retrospective_id
+        created_at
+    project iteration:
+        iteration_id
+        project_id
+        iteration_number
+        start_date
+        end_date
+        iterations_status_id
+        created_at
+    iteration status:
+        status_id
+        status_name
+        status_description
+    retrospective:
+        retrospective_id
+        project_id
+        sprint_id
+        discussion_points
+        action_items
+        created_at
+    filter preferences:
+        filter_id
+        user_id
+        filter_type
+        filter_criteria
+        is_active
+        created_at
+    dashboard settings:
+        dashboard_id
+        user_id
+        default_view
+        widgets_enabled
+        refresh_interval
+        theme
+        show_notifications
+        visible_projects
+        filter_preferences_id
+        last_updated
+        created_at
+    Approval:
+        approval_id
+        requester_id (User who requested approval)
+        approver_id (User who needs to approve)
+        approval_status_id
+        approval_type_id
+        related_entity_type (e.g., task, feature, requirement)
+        related_entity_id
+        comments
+        created_at
+        updated_at
+    Approval_Status:    
+        status_id
+        status_name (e.g., Pending, Approved, Rejected)
+        status_description
+    Approval_Type:
+        type_id
+        type_name (e.g., Requirement Approval, Feature Sign-off)
+        type_description
+    User_Feedback:    
+        feedback_id
+        user_id
+        entity_type (e.g., feature, milestone, task)
+        entity_id
+        feedback_text
+        rating (optional, e.g., 1-5 stars)
+        created_at
+    Change Request:    
+        change_request_id
+        requester_id
+        project_id
+        feature_id (nullable, if change is for a feature)
+        task_id (nullable, if change is for a task)
+        change_description
+        change_status_id
+        created_at
+        updated_at
+    Change Request Status:
+        status_id
+        status_name (e.g., Submitted, In Review, Approved, Rejected)
+        status_description
+    Sprint Review:        
+        review_id
+        sprint_id
+        review_date
+        attendees (list of stakeholder/user IDs)
+        discussion_points
+        action_items
+        feedback_summary
+        created_at
+    Audit Log:
+        log_id
+        user_id (who made the action)
+        action_type (e.g., approval, feedback submission, change request)
+        related_entity_type
+        related_entity_id
+        timestamp
+        previous_value (nullable, if applicable)
+        new_value (nullable, if applicable)
+    Business objective:
+        objective_id
+        objective_name
+        objective_description
+        priority_level
+        target_completion_date
+        current_progress_percentage
+        related_project_id
+        created_at
+        updated_at
+    Key performance indicator:
+        kpi_id
+        kpi_name
+        kpi_description
+        target_value
+        current_value
+        measurement_unit
+        tracking_period
+        created_at
+        updated_at
+    ROI Assessment:
+        roi_id
+        project_id
+        initial_investment
+        expected_benefits
+        actual_benefits
+        roi_percentage
+        calculation_date
+        created_at
+        updated_at
+    Feature_impact_analysis:
+        impact_id
+        feature_id
+        customer_satisfaction_score
+        adoption_rate
+        impact_score
+        updated_at
+        created_at
+    Market Trend:
+        trend_id
+        trend_name
+        trend_description
+        impact_assessment
+        relevance_to_project_id
+        industry_category
+        source_reference
+        created_at
+        updated_at
+    source_reference:
+        reference_id
+        reference_name
+        reference_url
+        reference_description
+        created_at
+        updated_at
+    Project_Risk:
+        risk_id
+        project_id
+        risk_name
+        risk_description
+        risk_category
+        risk_probability
+        risk_impact
+        mitigation_strategy
+        risk_status_id
+        created_at
+        updated_at
+    Issue_log:
+        issue_id
+        project_id
+        issue_description
+        issue_severity
+        reported_by
+        assigned_to
+        issue_category
+        resolution_status_id
+        resolution_notes
+        created_at
+        updated_at
+    budget_tracking:
+        budget_id
+        project_id
+        total_budget
+        amount_spent
+        remaining_budget
+        budget_status_id
+        last_updated
+    budget_status:
+        status_id
+        status_name
+        status_description
+    scope change request:
+        change_request_id
+        project_id
+        requested_by
+        change_description
+        justification
+        impact_analysis
+        approval_status_id
+        approved_by
+        created_at
+        updated_at
+    compliance and regulatory check:
+        compliance_id
+        project_id
+        regulation_name
+        compliance_status_id
+        audit_date
+        audit_notes
+        created_at
+        updated_at
+    compliance_status:
+        status_id
+        status_name
+        status_description
+    discussion_thread:
+        thread_id
+        project_id
+        created_by
+        thread_title
+        thread_description
+        created_at
+        updated_at
+    thread_comment:
+        comment_id
+        thread_id
+        user_id
+        comment_text
+        created_at
+        updated_at
+    meeting:
+        meeting_id
+        project_id
+        meeting_date
+        meeting_type_id
+        duration
+        agenda
+        minutes
+        created_at
+        updated_at
+    meeting_type:
+        type_id
+        type_name
+        type_description
+    stakeholder report:
+        report_id
+        project_id
+        report_date
+        report_type_id
+        report_content
+        generated_at
+        stakeholder_id
+    report_type:
+        type_id
+        type_name
+        type_description
+    feature_vote:
+        vote_id
+        feature_id
+        user_id
+        vote_value_id
+        created_at
+    vote_value:
+        value_id
+        value_name
+        value_description
+    customer_feedback:
+        feedback_id
+        project_id
+        submitted_by
+        feedback_text
+        feedback_type_id
+        priority_level
+        created_at
+    feedback_type:
+        type_id
+        type_name
+        type_description
+    priority_level:
+        level_id
+        level_name
+        level_description
+    User:
+        user_id (Primary Key)
+        first_name
+        last_name
+        email
+        password_hash
+        role_id (Foreign Key to Role)
+        status (Active, Inactive, Suspended)
+        created_at
+        updated_at
+    Role:
+        role_id (Primary Key)
+        role_name (Stakeholder, Project Manager, Developer, QA, Business Analyst, etc.)
+        role_description
+    User_Role_Mapping:(For multiple roles per user if needed)
+        mapping_id (Primary Key)
+        user_id (Foreign Key to User)
+        role_id (Foreign Key to Role)
+        assigned_at
+    Permissions:    
+        permission_id (Primary Key)
+        role_id (Foreign Key to Role)
+        permission_name (View Reports, Approve Tasks, Manage Budgets, etc.)
+        permission_description
+    Product_Manager:
+        product_manager_id (Primary Key)
+        user_id (Foreign Key to User)
+        assigned_projects (List of projects managed)
+        business_unit
+        created_at
+        updated_at
+    Scrum_Master:    
+        scrum_master_id (Primary Key)
+        user_id (Foreign Key to User)
+        assigned_teams (List of teams managed)
+        agile_certification (Scrum, SAFe, etc.)
+        created_at
+        updated_at
+    Project_Requirement:
+        requirement_id (Primary Key)
+        project_id (Foreign Key to Project)
+        requirement_description
+        priority (High, Medium, Low)
+        status (Pending, Approved, In Progress, Completed)
+        created_at
+        updated_at
+    Scrum_Ceremony:    
+        ceremony_id (Primary Key)
+        project_id (Foreign Key to Project)
+        ceremony_name (Sprint Planning, Daily Stand-up, Retrospective, etc.)
+        scheduled_date
+        facilitator_id (Foreign Key to Scrum Master)
+        notes
+        created_at
+    Agile_Metrics:    
+        metric_id (Primary Key)
+        project_id (Foreign Key to Project)
+        sprint_id (Foreign Key to Sprint)
+        velocity (Story points per sprint)
+        burndown_chart_data
+        cycle_time
+        created_at
+    Risk_Management:
+        risk_id (Primary Key)
+        project_id (Foreign Key to Project)
+        risk_description
+        severity (Low, Medium, High, Critical)
+        mitigation_plan
+        status (Identified, Mitigated, Resolved)
+        created_at
+    Stakeholder_Feedback:
+        feedback_id (Primary Key)
+        project_id (Foreign Key to Project)
+        user_id (Foreign Key to User)
+        feedback_message
+        rating (1-5)
+        created_at
